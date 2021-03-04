@@ -15,7 +15,7 @@ sudo cat /etc/os-release | grep "^NAME*" | cut -d '"' -f 2;
 checkopsys(){
 	declare -a AptArray=("Kubuntu" "Xubuntu" "Lubuntu" "Parrot" "Debian" "Mint" "Knoppix" "Deepin" "Ubuntu")
 	declare -a PacArray=("Arch" "ArchBang" "ArchLabs" "ArkOS" "Manjaro" "Endeavour")
-	declare -a YumArray=("RedHat" "Fedora" "CentOS" "SUSE" "OpenSUSE")
+	declare -a YumArray=("RedHat" "Fedora" "CentOS Linux" "SUSE" "OpenSUSE")
 	
 	i=0
 	while true; do
@@ -245,7 +245,7 @@ install_ghidra(){
 install_metasploit(){
         echo "installing metasploit";
         cd /opt/
-        curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdat>
+        curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall
         echo "done";
 }
 
