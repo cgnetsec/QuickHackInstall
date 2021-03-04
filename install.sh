@@ -9,7 +9,7 @@
 #
 
 identify1(){
-sudo cat /etc/os-release | grep "^NAME*" | cut -d '"' -f 2;
+	sudo cat /etc/os-release | grep "^NAME*" | cut -d '"' -f 2;
 }
 
 checkopsys(){
@@ -60,60 +60,67 @@ setpm(){
 	fi
 }
 
+pm=$(setpm)
+
 install_basic(){
 	echo "installing necessary tools";
-	$(setpm) wget
-	$(setpm) curl
-	$(setpm) make
-	$(setpm) gcc
-	$(setpm) git
-	$(setpm) unzip
+	$pm wget \
+	    curl \
+	    make \
+	    gcc  \
+	    git  \
+	    unzip
 	echo "done";
 }
 
 install_osspec(){
         echo "installing tools based on your package manager";
         if [[ $packageman == "APT" ]]; then
-                sudo apt install -y smbclient
-                sudo apt install -y dnsutils #for dig
-                sudo apt install -y wireshark
-                sudo apt install -y default-jdk
-                sudo apt install -y python3-pip python-pip
+                sudo apt install -y smbclient      \
+                		    dnsutils       \
+               			    wireshark      \
+                	            default-jdk    \
+				    openssh-client \
+                		    python3-pip    \
+	       			    python-pip    
         elif [[ $packageman == "PAC" ]]; then
-                sudo pacman -Syyu smbclient
-                sudo pacman -Syyu bind #for dig
-                sudo pacman -Syyu wireshark-qt wireshark-cli
-                sudo pacman -Syyu jdk-openjdk
-                sudo pacman -Syyu python-pip python2-pip
+                sudo pacman -Syyu smbclient       \
+                		  bind            \
+                                  wireshark-qt    \
+			          wireshark-cli   \
+                                  jdk-openjdk     \
+				  openssh-client  \
+                                  python-pip      \ 
+			          python2-pip
         elif [[ $packageman == "YUM" ]]; then
-                sudo yum install -y samba-common-tools samba-client
-                sudo yum install -y dnsutils
-                sudo yum install -y wireshark
-                sudo yum install -y python3-pip python-pip
+		sudo yum install -y https://extras.getpagespeed.com/release-el8-latest.rpm
+                sudo yum install -y samba-common-tools    \
+			            samba-client          \
+				    bind                  \
+               			    wireshark             \
+				    java-11-openjdk-devel \ 
+				    openssh               \
+                		    python3-pip           \
+		                    python2-pip
         fi
         echo "done";
 }
 
 install_tools(){
 	echo "installing additional tools";
-	$(setpm) nmap
-	$(setpm) nc
-	$(setpm) vim
-	$(setpm) gdb
-	$(setpm) openssh-client
-	$(setpm) nikto
-	$(setpm) hydra
-	$(setpm) sqlmap
-	$(setpm) john
+        $pm nmap           \
+	    nc             \
+	    vim            \
+	    gdb            
 	echo "done";
 }
 install_pr(){
 	echo "installing programming languages";
-	$(setpm) python3
-	$(setpm) python
-	$(setpm) clang
-	$(setpm) perl
-	$(setpm) ruby
+	$pm python3 \
+	    python  \
+	    clang   \ 
+	    perl    \
+	    ruby    
 	echo "done";
 }
 
@@ -137,17 +144,49 @@ install_go(){
 	echo "installing go";
 	wget https://golang.org/dl/go1.16.linux-amd64.tar.gz; tar -xzvf go1*; sudo mv go /usr/local; rm go1*;
 	printf "export GOPATH=\$HOME/go\nexport GOROOT=/usr/local/go\nexport PATH=/usr/local/sbin/:\$GOPATH/bin:\$GOROOT/bin:\$PATH\n" >> ~/.bashrc;
+	export GOPATH=$HOME/go;
+	export GOROOT=/usr/local/go;
+	export PATH=/usr/local/sbin:$GOPATH/bin:$GOROOT/bin:$PATH;
 	echo "done";
+}
+
+install_nikto(){
+	echo "installing nikto";
+	cd /opt/
+	sudo git clone https://github.com/sullo/nikto
+	cd /opt/nikto/program
+	sudo ln -sfv /opt/nikto/program/nikto.pl /usr/local/bin/nikto
+}
+
+install_hydra(){
+	echo "installing hydra";
+	cd /opt/
+	sudo git clone https://github.com//
+	cd /opt/thc-hydra
+	sudo ./configure
+	sudo make
+	sudo make install
+	cd .. 
+	sudo rm -rf thc-hydra/
+}
+
+install_john(){
+	$pm john
+}
+
+install_sqlmap(){
+	$pm sqlmap
 }
 
 install_masscan(){
 	echo "installing masscan";
+	cd /opt/
 	git clone https://github.com/robertdavidgraham/masscan
 	cd masscan
 	sudo make
 	sudo make install
 	cd ..
-	rm -rf masscan/
+	sudo rm -rf masscan/
 	echo "done";
 }
 
@@ -245,7 +284,7 @@ install_ghidra(){
 install_metasploit(){
         echo "installing metasploit";
         cd /opt/
-        curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall
+	curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall
         echo "done";
 }
 
@@ -269,6 +308,8 @@ main(){
 	install_pymods
 	install_rust
 	install_go
+	install_nikto
+	install_hydra
 	install_masscan
 	install_pwncat
 	install_peass
