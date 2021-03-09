@@ -215,7 +215,7 @@ install_seclists(){
 
 install_gef(){
 	echo "installing gef"
-	bash -c "$(wget http://gef.blah.cat/sh -O -)"
+	bash -c "$(wget -q -O- https://github.com/hugsy/gef/raw/master/scripts/gef.sh | sh)"
 	echo "done";
 }
 
