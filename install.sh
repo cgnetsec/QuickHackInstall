@@ -161,7 +161,7 @@ install_nikto(){
 install_hydra(){
 	echo "installing hydra";
 	cd /opt/
-	sudo git clone https://github.com//
+	sudo git clone https://github.com/vanhauser-thc/thc-hydra
 	cd /opt/thc-hydra
 	sudo ./configure
 	sudo make
@@ -171,11 +171,14 @@ install_hydra(){
 }
 
 install_john(){
-	$pm john
+	cd /opt/
+	sudo git clone https://github.com/openwall/john
+	cd /opt/john/run
+	sudo ln -sfv /opt/john/run/john /usr/local/bin/john
 }
 
 install_sqlmap(){
-	$pm sqlmap
+	sudo pip3 install sqlmap
 }
 
 install_masscan(){
@@ -310,6 +313,8 @@ main(){
 	install_go
 	install_nikto
 	install_hydra
+	install_john
+	install_sqlmap
 	install_masscan
 	install_pwncat
 	install_peass
