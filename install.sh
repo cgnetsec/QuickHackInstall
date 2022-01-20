@@ -253,7 +253,7 @@ install_mimikatz(){
 
 install_sublist3r(){
 	echo "installing sublist3r";
-	cd/opt/
+	cd /opt/
 	sudo git clone https://github.com/aboul3la/Sublist3r.git
 	pip3 install -r /opt/Sublist3r/requirements.txt
 	sudo ln -sfv /opt/Sublist3r/sublist3r.py /usr/local/bin/sublist3r
