@@ -278,9 +278,9 @@ install_enum4linux-ng(){
 install_ghidra(){
         echo "installing ghidra";
         cd /opt/
-        sudo wget https://ghidra-sre.org/ghidra_9.2.2_PUBLIC_20201229.zip
-        sudo unzip ghidra_9.2.2_PUBLIC_20201229.zip
-        sudo ln -sfv /opt/ghidra_9.2.2_PUBLIC_20201229/ghidraRun /usr/local/bin/ghidra
+        sudo wget $(curl -s https://api.github.com/repos/NationalSecurityAgency/ghidra/releases/latest | grep browser_download_url | sed -re 's/.*: "([^"]+)".*/\1/')
+        sudo unzip ghidra*
+        sudo ln -sfv /opt/ghidra*/ghidraRun /usr/local/bin/ghidra
         echo "done";
 }
 
