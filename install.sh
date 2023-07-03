@@ -13,7 +13,7 @@ identify1(){
 }
 
 checkopsys(){
-	declare -a AptArray=("Kubuntu" "Xubuntu" "Lubuntu" "Parrot" "Debian" "Mint" "Knoppix" "Deepin" "Ubuntu")
+	declare -a AptArray=("Kubuntu" "Xubuntu" "Lubuntu" "Parrot" "Debian" "Mint" "Linux Mint" "Knoppix" "Deepin" "Ubuntu")
 	declare -a PacArray=("Arch" "ArchBang" "ArchLabs" "ArkOS" "Manjaro" "Endeavour")
 	declare -a YumArray=("RedHat" "Fedora" "CentOS Linux" "SUSE" "OpenSUSE")
 	
