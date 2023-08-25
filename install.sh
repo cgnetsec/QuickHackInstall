@@ -1,4 +1,5 @@
-#!/bin/bash -i
+#!/usr/bin/env bash
+# it has come to my attention that using /usr/bin/env would be better than /bin/bash, as /bin/bash may not be present in all machines/environments. shoutout to @lphoefox for the clarification
 # inspired by https://github.com/TheCrysp/Hackbuntu
 # this has been tested on the following operating systems:
 # Ubuntu, CentOS, Archlinux
